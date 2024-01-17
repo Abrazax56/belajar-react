@@ -1,0 +1,55 @@
+Arguments: 
+  /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/share/yarn/bin/yarn.js
+
+PATH: 
+  /data/data/com.termux/files/home/bin:/data/data/com.termux/files/home/.local/bin:/data/data/com.termux/files/usr/local/bin:/data/data/com.termux/files/usr/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  20.2.0
+
+Platform: 
+  android arm
+
+Trace: 
+  Error: EPERM: operation not permitted, symlink '../../../parser/bin/babel-parser.js' -> '/storage/emulated/0/react-pemula/part-005/node_modules/@babel/core/node_modules/.bin/parser'
+
+npm manifest: 
+  {
+    "name": "part-003",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+      "preview": "vite preview"
+    },
+    "dependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+      "@types/react": "^18.2.43",
+      "@types/react-dom": "^18.2.17",
+      "@vitejs/plugin-react": "^4.2.1",
+      "eslint": "^8.55.0",
+      "eslint-plugin-react": "^7.33.2",
+      "eslint-plugin-react-hooks": "^4.6.0",
+      "eslint-plugin-react-refresh": "^0.4.5",
+      "vite": "^4.4.0",
+      "tailwindcss": "^3.4.1",
+      "postcss": "^8.4.33",
+      "autoprefixer": "^10.4.16",
+      "react-router-dom": "^6.21.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
