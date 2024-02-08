@@ -1,5 +1,6 @@
 import Nest from './Nested.jsx'
-import {useState} from "react"
+import States from './State.jsx'
+import {useState, useEffect} from "react"
 const Humans = [
   {
     name: "Ahmad Beni Rusli",
@@ -26,13 +27,34 @@ const Humans = [
 const email = localStorage.getItem('email')
 
 export default () => {
-  const [hello, setHello] = useState([
-    {
-      name: "Ahmad Beni",
-      helo: "Hello beni",
-      count: 1,
+  const [hello, setHello] = useState([])
+  const [say, setTotalSay] = useState(0)
+  useEffect(() => {
+    setHello(JSON.parse(localStorage.getItem("say")) || [])
+    // if(say === 0){
+//       document.querySelector(".delete").classList.add("hidden")
+//     } else {
+//       document.querySelector(".delete").classList.remove("hidden")
+//     }
+  }, [])
+  useEffect(() => {
+    if(hello.length > 0) {
+      const sum = hello.reduce((x, y) => {
+        const contn = hello.find(hel => hel.name === y.name)
+        return x + y.count
+      }, 0)
+      setTotalSay(sum)
+      localStorage.setItem("say", JSON.stringify(hello))
     }
-  ])
+  }, [hello])
+  
+  const HandleDelete= () => {
+   
+      localStorage.removeItem("say")
+      setHello([])
+      setTotalSay(0)
+    
+  }
   const HandleHello = (name) => {
     if(hello.find(man => man.name === name)) {
       setHello(
@@ -76,6 +98,8 @@ export default () => {
             hello.map((person) => <li key={person.name}>{person.helo} count={person.count}</li>)
           }
         </ul>
+        <p>total say = {say}</p>
+        <button type="button" onClick={HandleDelete} className="px-4 bg-red-700 rounded font-bold text-white delete">Delete Say</button>
       </div>
     </div>
   </>

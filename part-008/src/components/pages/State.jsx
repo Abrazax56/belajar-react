@@ -6,8 +6,18 @@ class Count extends React.Component{
     this.state = {
       count: 10
     }
+    alert("constructor")
+  }
+  componentDidMount () {
+    this.setState({count: 10})
+    alert("componentDidMount")
+  }
+  componentDidUpdate(prevProps, prevState) {
+    alert("update ")
+    if(this.state.count === 10000) this.setState({count: 10})
   }
   render() {
+    alert("render")
     return (
       <div>
         <h1>{this.state.count}</h1>
