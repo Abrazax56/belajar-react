@@ -1,6 +1,6 @@
 import Nest from './Nested.jsx'
 import States from './State.jsx'
-import {useState, useEffect} from "react"
+import {useState, useEffect, useRef} from "react"
 const Humans = [
   {
     name: "Ahmad Beni Rusli",
@@ -70,6 +70,19 @@ export default () => {
     localStorage.removeItem('password');
     window.location.href = "/login"
   }
+  const refHello = useRef(JSON.parse(localStorage.getItem("say")) || [])
+  const HandleHelloRef = (name) => {
+    refHello.current = [...refHello.current, {name: "bunu", helo:"hi bunu", count: 78}]
+    localStorage.setItem("say", JSON.stringify(refHello.current))
+  }
+  const totalCount = useRef(null)
+  useEffect(() => {
+    if(hello.length > 0) {
+      totalCount.current.style.visibility = "visible";
+    } else {
+      totalCount.current.style.visibility = "hidden"
+    }
+  }, [hello])
   return (
   <>
     <div className="flex justify-end h-20 bg-pink-600 items-center text-white px-4 font-bold">
@@ -98,8 +111,13 @@ export default () => {
             hello.map((person) => <li key={person.name}>{person.helo} count={person.count}</li>)
           }
         </ul>
-        <p>total say = {say}</p>
+        <p ref={totalCount}>total say = {say}</p>
         <button type="button" onClick={HandleDelete} className="px-4 bg-red-700 rounded font-bold text-white delete">Delete Say</button>
+        {/*<ul>
+          {
+            refHello.current.map((person) => <li key={person.name}>{person.helo} count={person.count}</li>)
+          }
+        </ul>*/}
       </div>
     </div>
   </>
