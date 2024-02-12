@@ -1,7 +1,10 @@
 import Nest from './Nested.jsx'
 import States from './State.jsx'
 import {useState, useEffect, useRef} from "react"
-const Humans = [
+import prod from "../.././service/project.service.js";
+
+//const Humans = []
+/*const Humans = [
   {
     name: "Ahmad Beni Rusli",
     job: "Frontend Developer",
@@ -22,32 +25,32 @@ const Humans = [
       github: "https://github.com/viafitriana"
     }
   }
-];
+];*/
 
 const email = localStorage.getItem('email')
 
 export default () => {
   const [hello, setHello] = useState([])
   const [say, setTotalSay] = useState(0)
+  const [Humans, setHumans] = useState([])
   useEffect(() => {
     setHello(JSON.parse(localStorage.getItem("say")) || [])
-    // if(say === 0){
-//       document.querySelector(".delete").classList.add("hidden")
-//     } else {
-//       document.querySelector(".delete").classList.remove("hidden")
-//     }
   }, [])
   useEffect(() => {
-    if(hello.length > 0) {
+    if(Humans.length > 0 && hello.length > 0) {
       const sum = hello.reduce((x, y) => {
-        const contn = hello.find(hel => hel.name === y.name)
-        return x + y.count
+        const contn = hello.find(hel => hel.title === y.title)
+        return x + y.co
       }, 0)
       setTotalSay(sum)
       localStorage.setItem("say", JSON.stringify(hello))
     }
-  }, [hello])
-  
+  }, [hello, Humans])
+  useEffect(() => {
+    prod((data) => {
+      setHumans(data)
+    })
+  }, [])
   const HandleDelete= () => {
    
       localStorage.removeItem("say")
@@ -58,10 +61,10 @@ export default () => {
   const HandleHello = (name) => {
     if(hello.find(man => man.name === name)) {
       setHello(
-        hello.map(i => i.name === name ? {...i, count: i.count + 1} : i)
+        hello.map(i => i.name === name ? {...i, co: i.co + 1} : i)
       )
     } else {
-      setHello([...hello, {name, helo: "hello " + name, count: 1}])
+      setHello([...hello, {name, co: 1}])
     }
   }
   const HandleLogout = (e) => {
@@ -92,14 +95,13 @@ export default () => {
     <div className="w-full min-h-screen bg-amber-100 flex flex-wrap gap-2 justify-center items-center px-5">
       <div className="w-3/4 flex flex-wrap">
       {
-      Humans.map(human => (
-        <Nest key={human.name}>
-          <Nest.Header>{human.name}</Nest.Header>
-          <Nest.SubHeader>{human.job}</Nest.SubHeader>
-          <Nest.Body>{human.intro}</Nest.Body>
-          <Nest.Account instagram={human.account.instagram} github={human.account.github}/>
-          <Nest.Button handleHello={HandleHello} name={human.name}>Say Hello 👋</Nest.Button>
-          <Nest.Footer>{human.footer}</Nest.Footer>
+        Humans.length > 0 && Humans.map(human => (
+        <Nest key={human.id}>
+          <Nest.Header>{human.title}</Nest.Header>
+          <Nest.SubHeader>{human.price}</Nest.SubHeader>
+          <Nest.Body>{human.description}</Nest.Body>
+          <Nest.Button handleHello={HandleHello} name={human.title}>Add to cart</Nest.Button>
+          <Nest.Footer>{human.rating.rate}</Nest.Footer>
          </Nest>
       ))
       }
@@ -108,7 +110,7 @@ export default () => {
         <h1 className="text-2xl font-bold text-red-700">Hello Count</h1>
         <ul>
           {
-            hello.map((person) => <li key={person.name}>{person.helo} count={person.count}</li>)
+            Humans.length > 0 && hello.map((person) => <li key={person.name}>{person.name} total={person.co}</li>)
           }
         </ul>
         <p ref={totalCount}>total say = {say}</p>
