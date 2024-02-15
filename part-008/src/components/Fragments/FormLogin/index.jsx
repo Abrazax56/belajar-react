@@ -1,27 +1,33 @@
 import Inputs from '../.././Elements/Input/index.jsx'
 import Button from '../.././Elements/Button/index.jsx'
-import { useRef, useEffect } from "react"
+import login from '../../.././service/auth.service.js'
+import { useRef, useEffect, useState } from "react"
 
-const Form = () => {
+export default () => {
+  const [loginFailed, setLoginFailed] = useState("");
   const HandleSubmit = e => {
     e.preventDefault();
-    localStorage.setItem('email', e.target.email.value)
-    localStorage.setItem('password', e.target.password.value)
-    alert("Email : " + e.target.email.value + "\nPassword : " + e.target.password.value)
-    alert("success login")
-    window.location.href = '/nested'
+    alert('clicked')
+    /*login(data, (status, res) => {
+      if(status) {
+        localStorage.setItem('token', res)
+        window.location.href = '/nested'
+      } else {
+        setLoginFailed(res.response.data);
+      }
+    });*/
   }
-  const emailRef = useRef(null)
+  const usernameRef = useRef(null)
   useEffect(() => {
-    emailRef.current.focus();
+    usernameRef.current.focus();
   }, [])
   return (
     <form onSubmit={HandleSubmit}>
-      <Inputs labelFor="email" labelText="Email" typeInput="email">e.g, ahmad@gmail.com</Inputs>
-      <Inputs labelFor="password" labelText="Password" typeInput="password" ref={emailRef}>********</Inputs>
+      {/*{loginFailed && */}<p className="text-red-500">anu{/*loginFailed*/}</p>{/*}*/}
+      <Inputs labelFor="username" labelText="Username" typeInput="username" ref={usernameRef}>e.g,, JohnDoe23</Inputs>
+      <Inputs labelFor="password" labelText="Password" typeInput="password">********</Inputs>
       <Button bgColor="bg-slate-200" textColor="text-slate-900" otherClasses="w-full">Log In</Button>
     </form>
   )
 }
 
-export default Form;
