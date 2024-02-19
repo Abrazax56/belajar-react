@@ -2,6 +2,7 @@ import Nest from './Nested.jsx'
 import States from './State.jsx'
 import {useState, useEffect, useRef} from "react"
 import prod from "../.././service/project.service.js";
+import { getUsername } from "../.././service/auth.service.js"
 
 //const Humans = []
 /*const Humans = [
@@ -27,12 +28,14 @@ import prod from "../.././service/project.service.js";
   }
 ];*/
 
-const email = localStorage.getItem('email')
+
+// const username = getUsername(token);
 
 export default () => {
   const [hello, setHello] = useState([])
   const [say, setTotalSay] = useState(0)
   const [Humans, setHumans] = useState([])
+  const [username, setUsername] = useState('')
   useEffect(() => {
     setHello(JSON.parse(localStorage.getItem("say")) || [])
   }, [])
@@ -45,7 +48,15 @@ export default () => {
       setTotalSay(sum)
       localStorage.setItem("say", JSON.stringify(hello))
     }
-  }, [hello, Humans])
+  }, [hello, Humans]);
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      setUsername(getUsername(token))
+    } else {
+      window.location.href = '/login';
+    }
+  }, [])
   useEffect(() => {
     prod((data) => {
       setHumans(data)
@@ -69,8 +80,7 @@ export default () => {
   }
   const HandleLogout = (e) => {
     e.preventDefault();
-    localStorage.removeItem('email');
-    localStorage.removeItem('password');
+    localStorage.removeItem('token');
     window.location.href = "/login"
   }
   const refHello = useRef(JSON.parse(localStorage.getItem("say")) || [])
@@ -89,7 +99,7 @@ export default () => {
   return (
   <>
     <div className="flex justify-end h-20 bg-pink-600 items-center text-white px-4 font-bold">
-      {email}
+      {username}
       <button className="ml-5 bg-white text-black font-semibold px-3 rounded" type="button" onClick={HandleLogout}>Logout</button>
     </div>
     <div className="w-full min-h-screen bg-amber-100 flex flex-wrap gap-2 justify-center items-center px-5">
