@@ -1,7 +1,7 @@
 import Nest from './Nested.jsx'
 import States from './State.jsx'
 import {useState, useEffect, useRef} from "react"
-import prod from "../.././service/project.service.js";
+import {getAllProduct} from "../.././service/project.service.js";
 import { getUsername } from "../.././service/auth.service.js"
 
 //const Humans = []
@@ -58,7 +58,7 @@ export default () => {
     }
   }, [])
   useEffect(() => {
-    prod((data) => {
+    getAllProduct((data) => {
       setHumans(data)
     })
   }, [])
@@ -107,7 +107,7 @@ export default () => {
       {
         Humans.length > 0 && Humans.map(human => (
         <Nest key={human.id}>
-          <Nest.Header>{human.title}</Nest.Header>
+          <Nest.Header id={human.id}>{human.title}</Nest.Header>
           <Nest.SubHeader>{human.price}</Nest.SubHeader>
           <Nest.Body>{human.description}</Nest.Body>
           <Nest.Button handleHello={HandleHello} name={human.title}>Add to cart</Nest.Button>

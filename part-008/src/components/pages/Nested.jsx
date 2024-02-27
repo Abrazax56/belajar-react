@@ -1,10 +1,11 @@
+import {Link} from 'react-router-dom';
 const Nest = ({children}) => (
       <div className="flex flex-col justify-between align-baseline items-start w-full max-w-sm p-5 bg-white rounded shadow shadow-slate-400 shadow-xl mb-3">
         {children}
       </div>
   )
 
-const Header = ({children}) => <h1 className="text-slate-800 text-3xl font-mono font-bold">{children}</h1>
+const Header = ({id, children}) => <Link to={`/nest/${id}`} className="text-slate-800 text-3xl font-mono font-bold">{children}</Link>
 
 const SubHeader = ({children}) => <p className="text-red-500 px-5 text-xl pt-1 bg-red-100 font-mono font-semibold rounded mt-5">{children}</p>
 

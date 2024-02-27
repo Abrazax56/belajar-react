@@ -5,6 +5,7 @@ import LogIn from './components/pages/Login.jsx'
 import Register from './components/pages/Register.jsx'
 import Incorrect from './components/pages/IncorrectPath.jsx'
 import Nest from './components/pages/Pages.jsx'
+import NestPage from './components/pages/DetailProduct.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/nested",
     element: <Nest/>
+  },
+  {
+    path: "/nest/:id",
+    element: <NestPage/>
   }
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
