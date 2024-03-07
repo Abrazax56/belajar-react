@@ -47,7 +47,8 @@ npm manifest:
       "postcss": "^8.4.33",
       "autoprefixer": "^10.4.16",
       "react-router-dom": "^6.21.2",
-      "redux": "latest"
+      "redux": "latest",
+      "@reduxjs/toolkit": "latest"
     }
   }
 
