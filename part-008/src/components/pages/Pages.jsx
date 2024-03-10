@@ -2,7 +2,8 @@ import Nest from './Nested.jsx'
 import States from './State.jsx'
 import {useState, useEffect, useRef} from "react"
 import {getAllProduct} from "../.././service/project.service.js";
-import { getUsername } from "../.././service/auth.service.js"
+import { getUsername } from "../.././service/auth.service.js";
+import { useSelector } from "react-redux";
 
 //const Humans = []
 /*const Humans = [
@@ -32,13 +33,13 @@ import { getUsername } from "../.././service/auth.service.js"
 // const username = getUsername(token);
 
 export default () => {
-  const [hello, setHello] = useState([])
+  const hello = useSelector((state) => state.cart.data);
   const [say, setTotalSay] = useState(0)
   const [Humans, setHumans] = useState([])
   const [username, setUsername] = useState('')
-  useEffect(() => {
+  /*useEffect(() => {
     setHello(JSON.parse(localStorage.getItem("say")) || [])
-  }, [])
+  }, [])*/
   useEffect(() => {
     if(Humans.length > 0 && hello.length > 0) {
       const sum = hello.reduce((x, y) => {
@@ -69,7 +70,7 @@ export default () => {
       setTotalSay(0)
     
   }
-  const HandleHello = (name) => {
+  /*const HandleHello = (name) => {
     if(hello.find(man => man.name === name)) {
       setHello(
         hello.map(i => i.name === name ? {...i, co: i.co + 1} : i)
@@ -77,17 +78,17 @@ export default () => {
     } else {
       setHello([...hello, {name, co: 1}])
     }
-  }
+  }*/
   const HandleLogout = (e) => {
     e.preventDefault();
     localStorage.removeItem('token');
     window.location.href = "/login"
   }
-  const refHello = useRef(JSON.parse(localStorage.getItem("say")) || [])
+  /*const refHello = useRef(JSON.parse(localStorage.getItem("say")) || [])
   const HandleHelloRef = (name) => {
     refHello.current = [...refHello.current, {name: "bunu", helo:"hi bunu", count: 78}]
     localStorage.setItem("say", JSON.stringify(refHello.current))
-  }
+  }*/
   const totalCount = useRef(null)
   useEffect(() => {
     if(hello.length > 0) {
@@ -101,6 +102,7 @@ export default () => {
     <div className="flex justify-end h-20 bg-pink-600 items-center text-white px-4 font-bold">
       {username}
       <button className="ml-5 bg-white text-black font-semibold px-3 rounded" type="button" onClick={HandleLogout}>Logout</button>
+      <p className="ml-4">cart: {say}</p>
     </div>
     <div className="w-full min-h-screen bg-amber-100 flex flex-wrap gap-2 justify-center items-center px-5">
       <div className="w-3/4 flex flex-wrap">
@@ -110,7 +112,7 @@ export default () => {
           <Nest.Header id={human.id}>{human.title}</Nest.Header>
           <Nest.SubHeader>{human.price}</Nest.SubHeader>
           <Nest.Body>{human.description}</Nest.Body>
-          <Nest.Button handleHello={HandleHello} name={human.title}>Add to cart</Nest.Button>
+          <Nest.Button name={human.title}>Add to cart</Nest.Button>
           <Nest.Footer>{human.rating.rate}</Nest.Footer>
          </Nest>
       ))

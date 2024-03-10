@@ -1,4 +1,7 @@
 import {Link} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../.././redux/actions/cartSlice.js';
+
 const Nest = ({children}) => (
       <div className="flex flex-col justify-between align-baseline items-start w-full max-w-sm p-5 bg-white rounded shadow shadow-slate-400 shadow-xl mb-3">
         {children}
@@ -16,7 +19,11 @@ const Account = ({instagram, github}) => <div className="mt-5 flex flex-wrap gap
           <a href={instagram} target="_blank" className="font-mono text-sm font-bold text-sky-500">📸 Instagram</a>
         </div>
 
-const Button = ({children, handleHello, name}) => <button className="px-4 mt-5 bg-red-700 rounded text-white text-xl" type="button" onClick={() => handleHello(name)}>{children}</button>
+const Button = ({children, name}) => {
+  const dispatch = useDispatch();
+  return <button className="px-4 mt-5 bg-red-700 rounded text-white text-xl" type="button" onClick={() => dispatch(addToCart({name, co: 1}))}>{children}</button>
+  
+}
 
 const Footer = ({children}) => <p className="mt-5 text-sm font-mono text-slate-500">{children}</p>
 
