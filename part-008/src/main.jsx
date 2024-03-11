@@ -8,6 +8,8 @@ import Nest from './components/pages/Pages.jsx'
 import NestPage from './components/pages/DetailProduct.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import DarkModeContextProvider from './context/DarkMode.jsx';
+import { TotalPriceProvider } from './context/TotalPrice.jsx';
 import store from './redux/store.js'
 
 const router = createBrowserRouter([
@@ -36,7 +38,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}/>
+      <DarkModeContextProvider>
+        <TotalPriceProvider>
+          <RouterProvider router={router}/>
+        </TotalPriceProvider>
+      </DarkModeContextProvider>
     </Provider>
   </React.StrictMode>,
 )

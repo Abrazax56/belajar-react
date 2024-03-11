@@ -4,6 +4,7 @@ import {useState, useEffect, useRef} from "react"
 import {getAllProduct} from "../.././service/project.service.js";
 import { getUsername } from "../.././service/auth.service.js";
 import { useSelector } from "react-redux";
+import { useTotalPrice, useTotalPriceDispatch } from '../.././context/TotalPrice.jsx';
 
 //const Humans = []
 /*const Humans = [
@@ -34,7 +35,10 @@ import { useSelector } from "react-redux";
 
 export default () => {
   const hello = useSelector((state) => state.cart.data);
-  const [say, setTotalSay] = useState(0)
+  //const [say, setTotalSay] = useState(0)
+  
+  const dispatch = useTotalPriceDispatch();
+  const { total } = useTotalPrice();
   const [Humans, setHumans] = useState([])
   const [username, setUsername] = useState('')
   /*useEffect(() => {
@@ -46,7 +50,13 @@ export default () => {
         const contn = hello.find(hel => hel.title === y.title)
         return x + y.co
       }, 0)
-      setTotalSay(sum)
+      //setTotalSay(sum)
+      dispatch({
+        type: 'update',
+        payload: {
+          total: sum
+        }
+      })
       localStorage.setItem("say", JSON.stringify(hello))
     }
   }, [hello, Humans]);
@@ -102,7 +112,7 @@ export default () => {
     <div className="flex justify-end h-20 bg-pink-600 items-center text-white px-4 font-bold">
       {username}
       <button className="ml-5 bg-white text-black font-semibold px-3 rounded" type="button" onClick={HandleLogout}>Logout</button>
-      <p className="ml-4">cart: {say}</p>
+      <p className="ml-4">cart: {total}</p>
     </div>
     <div className="w-full min-h-screen bg-amber-100 flex flex-wrap gap-2 justify-center items-center px-5">
       <div className="w-3/4 flex flex-wrap">
@@ -125,7 +135,7 @@ export default () => {
             Humans.length > 0 && hello.map((person) => <li key={person.name}>{person.name} total={person.co}</li>)
           }
         </ul>
-        <p ref={totalCount}>total say = {say}</p>
+        <p ref={totalCount}>total say = {total}</p>
         <button type="button" onClick={HandleDelete} className="px-4 bg-red-700 rounded font-bold text-white delete">Delete Say</button>
         {/*<ul>
           {

@@ -1,12 +1,22 @@
 import Title from '.././Fragments/Title/index.jsx'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react';
+import { DarkMode } from '../.././context/DarkMode.jsx';
 
 const Auth = ({children, foot, type}) => {
+  const {isDarkMode, setIsDarkMode} = useContext(DarkMode);
+  //alert(isDarkMode);
+  const dark = isDarkMode ? 'bg-slate-950' : 'bg-white'
   return (
-    <div className="w-full max-w-xs">
+    <div className={`w-full flex justify-center items-center flex-col min-h-screen ${dark}`}>
+     <div className="p-8 rounded w-full max-w-xs flex justify-end">
+       <button onClick={() => setIsDarkMode(!isDarkMode)} className="px-5 py-1 bg-slate-900 rounded text-white">{isDarkMode ? 'light' : 'dark'}</button>
+     </div>
+     <div className="p-8 rounded w-full max-w-xs bg-slate-900">
       <Title footnotes="Welcome, please enter your detail">{type}</Title>
       {children}
       <Navigation type={type}/>
+     </div>
     </div>
   )
 }
